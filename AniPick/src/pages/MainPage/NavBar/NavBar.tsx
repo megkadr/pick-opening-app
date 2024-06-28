@@ -3,7 +3,7 @@ import Style from "./NavBar.module.css"
 
 export default function NavBar() {
     return (
-        <header>
+        <header className={Style.header}>
             <nav className={Style.nav}>
                 <Link to="/mainPage" className={Style.siteTitle}>AniPick</Link>
                 <ul>

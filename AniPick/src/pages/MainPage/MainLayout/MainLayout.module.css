@@ -1,0 +1,33 @@
+.mainLayout { 
+    display: flex;
+    min-height: 90vh;
+    border: 2px solid black;
+    flex-direction: column;
+}
+
+.mainContent {
+    display: flex;
+    height: 30vh;
+}
+
+.quizTitle { 
+    max-width: 90vw;
+    min-width: 89vw;
+    height: 30vh;
+    border: 2px solid black;
+}
+
+.year { 
+    width: 10vw;
+    border: 2px solid black;
+    height: 30vh;
+}
+
+.cardPicks{
+    display: grid;
+    border: 2px solid black;
+    height: 60vh;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(3, 1fr);
+}

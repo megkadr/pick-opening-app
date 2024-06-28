@@ -1,0 +1,7 @@
+.footer{
+    display: flex;
+    width: 100vw;
+    min-height: 40vh;
+    border: 2px sloid black;
+    padding: 0 1rem;
+}

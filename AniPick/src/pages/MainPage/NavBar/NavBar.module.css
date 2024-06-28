@@ -6,6 +6,7 @@
     align-items: stretch;
     gap: 2rem;
     padding: 0 1rem;
+    min-height: 10vh;
 }
 
 .nav ul {
@@ -31,4 +32,8 @@
 
 .siteTitle {
     font-size: 2rem;
+}
+
+.header {
+    min-height: 10vh;
 }

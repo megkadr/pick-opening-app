@@ -1,7 +1,9 @@
+import Style from "./Footer.module.css"
+
 export default function Footer() {
     return (
       <>
-        <footer> </footer>
+        <footer className={Style.Footer}>Footer</footer>
       </>
     )
 }
