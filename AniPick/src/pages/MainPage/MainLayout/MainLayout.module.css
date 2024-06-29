@@ -7,26 +7,39 @@
 
 .mainContent {
     display: flex;
-    height: 30vh;
+    height: 20vh;
 }
 
 .quizTitle { 
     max-width: 90vw;
     min-width: 89vw;
-    height: 30vh;
+    height: 20vh;
     border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
+.quizTitle h1 {
+    font-size: 4rem;
+}
 .year { 
     width: 10vw;
     border: 2px solid black;
-    height: 30vh;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.yearNumber {
+    font-size: 3rem;
+    transform: rotate(-90deg);
 }
 
 .cardPicks{
     display: grid;
     border: 2px solid black;
-    height: 60vh;
+    height: 70vh;
     align-items: center;
     justify-items: center;
     grid-template-columns: repeat(3, 1fr);

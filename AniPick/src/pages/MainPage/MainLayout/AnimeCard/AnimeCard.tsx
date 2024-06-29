@@ -1,10 +1,14 @@
 import Style from "./AnimeCard.module.css"
 
-export default function AnimeCard() {
+interface AnimeCardProps {
+  src: string
+}
+
+export default function AnimeCard({src}: AnimeCardProps) {
     return (
       <>
         <div className={Style.card}>
-            <video id="my-video" src="@D:/testFilm/test1.mp4">
+            <video className={Style.video} src={src}>
             </video>
         </div>
       </>
