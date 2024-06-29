@@ -9,17 +9,23 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.app.json'],
+    tsconfigRootDir: __dirname,   
+  },
   plugins: ['react-refresh'],
   rules: {
     "no-control-regex": 0,
     'react-refresh/only-export-components': "error",
     "@typescript-eslint/array-type": [
-    "error",
-    {
-      "default": "array"
-    }
+      "error",
+      {
+        "default": "array"
+      }
     ],
     "default-param-last": "off",
     "@typescript-eslint/default-param-last": "error"
-},
+  },
 }
