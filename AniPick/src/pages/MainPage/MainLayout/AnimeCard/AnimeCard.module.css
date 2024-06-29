@@ -1,9 +1,11 @@
 .card {
-    width: 90%;
-    height: 90%;
-    border: 2px solid black;
-    border-radius: 1rem;
+    width: 91%;
+    height: 91%;
+    border: 1rem solid black;
+    border-radius: 2rem;
     position: relative;
+    cursor: pointer;
+    transition: scale 0.3s ease-in-out;
 }
 
 .video { 
@@ -12,4 +14,8 @@
     object-fit: cover;
     position: absolute;
     border-radius: 1rem;
+}
+
+.card:hover {
+    scale: 1.1;
 }
