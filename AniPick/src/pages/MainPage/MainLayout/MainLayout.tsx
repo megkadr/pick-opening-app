@@ -7,35 +7,37 @@ import video3 from "../../../assets/videos/solo_leveling.mp4";
 import backgroundTransition from "../../../assets/images/todo_background.png";
 import clapAudio from "../../../assets/audio/clap.mp3";
 
-const VIDEOS = [
-  { src: video1, title: "kaiju" },
-  { src: video2, title: "mashle" },
-  { src: video3, title: "solo_leveling" },
-  { src: video1, title: "kaiju" },
-  { src: video2, title: "mashle" },
-  { src: video3, title: "solo_leveling" },
+const BATCHES = [
+  [
+    { src: video1, title: "kaiju", openingNumber: 1 },
+    { src: video2, title: "mashle", openingNumber: 2 },
+    { src: video3, title: "solo_leveling", openingNumber: 3 },
+    { src: video1, title: "kaiju", openingNumber: 4 },
+    { src: video2, title: "mashle", openingNumber: 5 },
+    { src: video3, title: "solo_leveling", openingNumber: 6 },
+  ],
+  [
+    { src: video3, title: "kaiju", openingNumber: 1 },
+    { src: video2, title: "mashle", openingNumber: 2 },
+    { src: video1, title: "solo_leveling", openingNumber: 3 },
+    { src: video3, title: "kaiju", openingNumber: 4 },
+    { src: video2, title: "mashle", openingNumber: 5 },
+    { src: video1, title: "solo_leveling", openingNumber: 6 },
+  ],
 ];
 
-const VIDEOS2 = [
-  { src: video3, title: "kaiju" },
-  { src: video2, title: "mashle" },
-  { src: video1, title: "solo_leveling" },
-  { src: video3, title: "kaiju" },
-  { src: video2, title: "mashle" },
-  { src: video1, title: "solo_leveling" },
-];
-
-export default function MainLayout() {
+const MainLayout = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [currentSet, setCurrentSet] = useState(VIDEOS);
+  const [currentBatchIndex, setCurrentBatchIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const clapAudioRef = useRef<HTMLAudioElement>(new Audio(clapAudio));
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
-  // eslint-disable-next-line prefer-const
-  let [batchNumber, setBatchNumber] = useState<number>(0);
+  const [showTitles, setShowTitles] = useState<boolean[]>(Array(6).fill(false));
+
+  const currentSet = BATCHES[currentBatchIndex];
 
   useEffect(() => {
     if (isPlaying) {
@@ -45,6 +47,11 @@ export default function MainLayout() {
           console.error("Error playing video:", error);
         });
         currentVideo.onended = () => {
+          setShowTitles(prev => {
+            const newTitles = [...prev];
+            newTitles[currentVideoIndex] = true;
+            return newTitles;
+          });
           if (currentVideoIndex < currentSet.length - 1) {
             setCurrentVideoIndex(prevIndex => prevIndex + 1);
           } else {
@@ -56,26 +63,25 @@ export default function MainLayout() {
   }, [currentVideoIndex, isPlaying, currentSet]);
 
   const handleCardClick = (index: number) => {
-    setShowButton(false);
     if (!isPlaying) {
-      if (batchNumber !== 1) {
-        setBatchNumber(batchNumber++);
+      if (currentBatchIndex < BATCHES.length - 1) {
+        setCurrentBatchIndex(prev => prev + 1);
+        setShowTitles(Array(6).fill(false)); // Reset titles for new batch
         setIsTransitioning(true);
         setShowBackground(true);
-        setShowButton(false);
         playClapSound();
         setTimeout(() => {
-          setCurrentSet(VIDEOS2);
           setCurrentVideoIndex(0);
           setIsPlaying(true);
           setIsTransitioning(false);
           setShowBackground(false);
         }, 1000);
       } else {
-        console.log("Game ended");
+        console.log("End of batches");
       }
     }
   };
+
   const handleButtonClick = () => {
     setShowButton(false);
     setIsTransitioning(true);
@@ -90,7 +96,7 @@ export default function MainLayout() {
 
   const playClapSound = () => {
     if (clapAudioRef.current) {
-        clapAudioRef.current.play().catch(error => {
+      clapAudioRef.current.play().catch(error => {
         console.error("Error playing clap sound:", error);
       });
     }
@@ -103,23 +109,30 @@ export default function MainLayout() {
         <div className={Style.quizTitle}><h1>ONLY SAVE 1 OPENING!</h1></div>
       </div>
       <div className={`${Style.cardPicks} ${isTransitioning ? Style['fade-out'] : Style['fade-in']}`}>
-        <div className={`${Style.cardPicksBackground} ${showBackground ? Style.show : ''}`} style={{ display: showBackground ? 'block' : 'none' }}><img className={Style.backgroundTransition} src={backgroundTransition} alt="background transition"/></div>
+        <div className={`${Style.cardPicksBackground} ${showBackground ? Style.show : ''}`} style={{ display: showBackground ? 'block' : 'none' }}>
+          <img className={Style.backgroundTransition} src={backgroundTransition} alt="background transition"/>
+        </div>
         {showButton && (
-          <button className={Style.playButton} onClick={() => handleButtonClick()}>Play</button>
+          <button className={Style.playButton} onClick={handleButtonClick}>Play</button>
         )}
         {!showButton && (
           currentSet.map((video, index) => (
             <AnimeCard
               key={index}
               src={video.src}
+              openingNumber={video.openingNumber}
               title={video.title}
-              onClick={() => handleCardClick(index)} // Pass index to identify which card was clicked
+              onClick={() => handleCardClick(index)}
               ref={el => videoRefs.current[index] = el}
               className={Style.cardItem}
+              showTitle={showTitles[index]}
+              videoNumber={index + 1} // Pass the video number (1 to 6) based on index
             />
           ))
         )}
       </div>
     </div>
   );
-}
+};
+
+export default MainLayout;
