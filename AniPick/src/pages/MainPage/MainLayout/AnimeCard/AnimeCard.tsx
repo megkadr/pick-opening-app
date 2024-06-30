@@ -30,7 +30,7 @@ const AnimeCard = forwardRef<HTMLVideoElement, AnimeCardProps>(
           loop={false}
         >
         </video>
-        <div className={Style.title}>{title}</div>
+        <div className={Style.animeTitle}>{title}</div>
       </div>
     );
   }
