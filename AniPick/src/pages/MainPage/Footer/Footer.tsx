@@ -20,8 +20,8 @@ export default function Footer() {
           <h2>AniPick</h2>
           <div className={Style.support}>
             <span>Support:</span>
-            <img alt="PayPal Logo" src={PayPalLogo}/>
-            <img alt="Patreon Logo" src={PatreonLogo}/>
+            <a href="https://www.paypal.com/donate/?hosted_button_id=3EPYZKTUG29SW"><img alt="PayPal Logo" src={PayPalLogo}/></a>
+            <a><img alt="Patreon Logo" src={PatreonLogo}/></a>
           </div>
           <p>
             AniPick is a fan-based project and is not affiliated with any anime production companies. 

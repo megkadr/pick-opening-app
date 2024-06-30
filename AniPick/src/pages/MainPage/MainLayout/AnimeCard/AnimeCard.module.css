@@ -6,6 +6,10 @@
     transition: scale 0.3s ease-in-out;
 }
 
+.card:hover {
+    scale: 1.1;
+}
+
 .video { 
     width: 100%;
     height: 100%;
@@ -16,10 +20,53 @@
     z-index: 20;
 }
 
-.card:hover {
-    scale: 1.1;
+.videoBackground {
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    border-radius: 2rem;
+    font-size: 7rem;
+    font-weight: 600;
+    -webkit-text-stroke: 0.5rem black;
+    position: absolute;
+    z-index: 100;
+    transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+.videoBackground.hide {
+    transform: scale(0);
+    opacity: 0;
 }
 
 .animeTitle {
     z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 600;
+    -webkit-text-stroke: 0.2rem black;
+    position: absolute;
+    z-index: 100;
+    animation: spin 0.5s ease-out;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

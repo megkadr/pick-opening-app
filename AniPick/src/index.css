@@ -2,6 +2,33 @@
   box-sizing: border-box;
 }
 
+:root {
+  --video-background-1-start: #ff7a18;
+  --video-background-1-end: #af002d;
+  --video-background-2-start: #4481eb;
+  --video-background-2-end: #04befe;
+  --video-background-3-start: #c33764;
+  --video-background-3-end: #1d2671;
+  --video-background-4-start: #4b6cb7;
+  --video-background-4-end: #182848;
+  --video-background-5-start: #134e5e;
+  --video-background-5-end: #71b280;
+  --video-background-6-start: #4ca1af;
+  --video-background-6-end: #c4e0e5;
+  --video-background-7-start: #ff7a18;
+  --video-background-7-end: #af002d;
+  --video-background-8-start: #4481eb;
+  --video-background-8-end: #04befe;
+  --video-background-9-start: #c33764;
+  --video-background-9-end: #1d2671;
+  --video-background-10-start: #4b6cb7;
+  --video-background-10-end: #182848;
+  --video-background-11-start: #134e5e;
+  --video-background-11-end: #71b280;
+  --video-background-12-start: #4ca1af;
+  --video-background-12-end: #c4e0e5;
+}
+
 body{
   margin: 0;
   font-family: "Lexend Deca", sans-serif;
