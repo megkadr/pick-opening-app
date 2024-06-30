@@ -1,8 +1,22 @@
 .mainLayout { 
     display: flex;
     min-height: 90vh;
-    border: 2px solid black;
     flex-direction: column;
+}
+
+.mainLayout::before {
+    background-image: url("../../../assets//images/cartoon-smoke-illustrated.jpg");
+    background-size: cover;
+    background-repeat: round;
+    content: "";
+    opacity: 0.3;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    -webkit-animation: backgroundScroll 20s linear infinite;
+    animation: backgroundScroll 20s linear infinite;
 }
 
 .mainContent {
@@ -14,26 +28,36 @@
     max-width: 90vw;
     min-width: 89vw;
     height: 20vh;
-    border: 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 200;
 }
 .quizTitle h1 {
     font-size: 4rem;
+    font-weight: 600;
+    color: #95b6d0;
+    background: #494949;
+    border-radius: 2rem;
+    padding: 1rem;
 }
 .year { 
     width: 10vw;
-    border: 2px solid black;
     height: 20vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 200;
 }
 
 .yearNumber {
     font-size: 3rem;
+    font-weight: 600;
     transform: rotate(-90deg);
+    color: #95b6d0;
+    background: #494949;
+    border-radius: 2rem;
+    padding: 1rem;
 }
 
 .backgroundTransition {
@@ -63,7 +87,6 @@
 
 .cardPicks {
     display: grid;
-    border: 2px solid black;
     height: 70vh;
     align-items: center;
     justify-items: center;
@@ -88,3 +111,13 @@
     .cardPicksBackground.show {
         opacity: 1;
     }
+
+@-webkit-keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: -1800px 0;}
+}
+
+@keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: -1800px 0;}
+}

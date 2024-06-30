@@ -4,8 +4,9 @@
 
 body{
   margin: 0;
+  font-family: "Lexend Deca", sans-serif;
 }
 
 .active {
-  background-color: #857a7a !important;
+  color: #95b6d0 !important;
 }

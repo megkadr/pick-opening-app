@@ -1,3 +1,11 @@
+.header {
+    min-height: 10vh;
+    background: #191919;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175); 
+    z-index: 300;
+    position: relative;
+}
+
 .nav {
     background-color: #333;
     color: white;
@@ -17,10 +25,6 @@
     gap: 1rem;
 }
 
-.nav li:hover {
-    background-color: #716b6b;
-}
-
 .nav a {
     color: inherit;
     text-decoration: none;
@@ -28,12 +32,13 @@
     display: flex;
     align-items: center;
     padding: .25rem;
+    font-weight: 600;
+}
+
+.nav a:hover {
+    color: #95b6d0;
 }
 
 .siteTitle {
     font-size: 2rem;
-}
-
-.header {
-    min-height: 10vh;
 }
