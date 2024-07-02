@@ -3,18 +3,18 @@
 }
 
 :root {
-  --video-background-1-start: #ff7a18;
-  --video-background-1-end: #af002d;
-  --video-background-2-start: #4481eb;
-  --video-background-2-end: #04befe;
-  --video-background-3-start: #c33764;
-  --video-background-3-end: #1d2671;
-  --video-background-4-start: #4b6cb7;
-  --video-background-4-end: #182848;
-  --video-background-5-start: #134e5e;
-  --video-background-5-end: #71b280;
-  --video-background-6-start: #4ca1af;
-  --video-background-6-end: #c4e0e5;
+  --video-background-1-start: #000000;
+  --video-background-1-end: #1a1a1a;
+  --video-background-2-start: #0a0a0a;
+  --video-background-2-end: #232323;
+  --video-background-3-start: #050505;
+  --video-background-3-end: #1f1f1f;
+  --video-background-4-start: #0f0f0f;
+  --video-background-4-end: #2a2a2a;
+  --video-background-5-start: #080808;
+  --video-background-5-end: #212121;
+  --video-background-6-start: #0d0d0d;
+  --video-background-6-end: #262626;
 }
 
 body{
