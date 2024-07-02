@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import Style from "./MainLayout.module.css";
 import AnimeCard from "./AnimeCard/AnimeCard";
 import YearDisplay from './YearDisplay/YearDisplay';
+import AudioVisualizer from '../../../components/AudioVisualizer/AudioVisualizer';
 import video1 from "../../../assets/videos/kaiju.mp4";
 import video2 from "../../../assets/videos/mashle.mp4";
 import video3 from "../../../assets/videos/solo_leveling.mp4";
@@ -117,7 +118,11 @@ const MainLayout = () => {
     <div className={Style.mainLayout}>
       <div className={Style.mainContent}>
         <YearDisplay year={year} />
-        <div className={Style.quizTitle}><h1>ONLY SAVE 1 OPENING!</h1></div>
+        {isPlaying ? (
+          <AudioVisualizer />
+        ) : (
+          <div className={Style.quizTitle}><h1>ONLY SAVE 1 OPENING!</h1></div>
+        )}
       </div>
       <div className={`${Style.cardPicks} ${isTransitioning ? Style['fade-out'] : Style['fade-in']}`}>
         <div className={`${Style.cardPicksBackground} ${showBackground ? Style.show : ''}`} style={{ display: showBackground ? 'block' : 'none' }}>
