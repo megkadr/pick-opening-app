@@ -1,22 +1,18 @@
 .mainLayout { 
     display: flex;
-    min-height: 90vh;
+    min-height: 94vh;
     flex-direction: column;
 }
 
 .mainLayout::before {
-    background-image: url("../../../assets//images/cartoon-smoke-illustrated.jpg");
+    background-image: url("../../../assets//images/main_background-AniPick_better.gif");
     background-size: cover;
-    background-repeat: round;
     content: "";
-    opacity: 0.3;
     position: absolute;
     top: 0px;
     right: 0px;
     bottom: 0px;
     left: 0px;
-    -webkit-animation: backgroundScroll 20s linear infinite;
-    animation: backgroundScroll 20s linear infinite;
 }
 
 .mainContent {

@@ -1,5 +1,6 @@
 .header {
-    min-height: 10vh;
+    min-height: 6vh;
+    max-height: 6vh;
     background: #191919;
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175); 
     z-index: 300;
@@ -7,6 +8,8 @@
 }
 
 .nav {
+    min-height: 6vh;
+    max-height: 6vh;
     background-color: #333;
     color: white;
     display: flex;
@@ -14,7 +17,6 @@
     align-items: stretch;
     gap: 2rem;
     padding: 0 1rem;
-    min-height: 10vh;
 }
 
 .nav ul {
@@ -40,5 +42,5 @@
 }
 
 .siteTitle {
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
