@@ -1,0 +1,19 @@
+.visualizer {
+    max-width: 80vw;
+    min-width: 79vw;
+    max-height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.visualizer img {
+    max-height: 12vh;
+    width: 70vw;
+    font-weight: 600;
+    color: #95b6d0;
+    background: #494949;
+    border-radius: 2rem;
+    padding: 1rem;
+}
