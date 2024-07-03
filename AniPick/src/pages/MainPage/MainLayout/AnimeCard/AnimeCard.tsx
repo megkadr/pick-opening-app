@@ -51,6 +51,7 @@ const AnimeCard = forwardRef<HTMLVideoElement, AnimeCardProps>(
           <span>{title.toUpperCase()}</span>
           <span>OPENING {openingNumber.toString().toUpperCase()}</span>
         </div>
+        <div className={Style.movingBorder} style={{ display: showTitle ? 'flex' : 'none' }}></div>
         <video
           className={Style.video}
           src={src}
