@@ -1,20 +1,55 @@
+using AniPick.Api;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllHeaders",
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+});
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "AniPick.Session";
+    options.IdleTimeout = TimeSpan.FromDays(4);
+    options.Cookie.IsEssential = true;
+    options.Cookie.HttpOnly = true;
+});
+
+builder.Services.AddCore(builder.Configuration);
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    app.UseHsts();
+}
 
-app.UseHttpsRedirection();
+app.UseCors("AllowAllHeaders");
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseCookiePolicy();
+app.UseSession();
+
+app.MapControllers();
 
 var summaries = new[]
 {
