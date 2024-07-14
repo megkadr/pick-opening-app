@@ -1,0 +1,6 @@
+@AniPick.Api_HostAddress = http://localhost:5171
+
+GET {{AniPick.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

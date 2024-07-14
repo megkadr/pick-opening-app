@@ -62,8 +62,8 @@
 }
 
 .movingBorder {
-    height: 1rem;
-    width: 1rem;
+    height: 2rem;
+    width: 2rem;
     background-image: url("../../../../assets/images/slime_data.png");
     background-size: cover;
     background-repeat: round;
@@ -79,14 +79,14 @@
     }
     25% {
         top: 0;
-        left: calc(100% - 1rem);
+        left: calc(100% - 2rem);
     }
     50% {
-        top: calc(100% - 1rem);
-        left: calc(100% - 1rem);
+        top: calc(100% - 2rem);
+        left: calc(100% - 2rem);
     }
     75% {
-        top: calc(100% - 1rem);
+        top: calc(100% - 2rem);
         left: 0;
     }
     100% {
