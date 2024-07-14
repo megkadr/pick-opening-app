@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  postgres-anipick:
+    image: postgres:14
+    container_name: postgres_anipick
+    environment:
+      POSTGRES_DB: anipick_db
+      POSTGRES_USER: anipick_user
+      POSTGRES_PASSWORD: "fLTC9J2w436M5UjpHyPDFu"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_anipick:/var/lib/postgresql/data
+
+volumes:
+  postgres_data_anipick:
