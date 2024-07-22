@@ -8,6 +8,7 @@ export default function NavBar() {
                 <Link to="/mainPage" className={Style.siteTitle}>AniPick</Link>
                 <ul>
                     <CustomLink to="/mainPage">Pick Anime</CustomLink>
+                    <CustomLink to="/add-anime">Add Anime</CustomLink>
                     <CustomLink to="/login">Login</CustomLink>
                     <CustomLink to="/register">Register</CustomLink>
                     <CustomLink to="/userPanel">UserPanel</CustomLink>

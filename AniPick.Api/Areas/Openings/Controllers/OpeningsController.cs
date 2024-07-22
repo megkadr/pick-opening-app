@@ -1,4 +1,5 @@
-﻿using AniPick.Api.Areas.Openings.Services;
+﻿using AniPick.Api.Areas.Openings.Models;
+using AniPick.Api.Areas.Openings.Services;
 using AniPick.Api.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -24,7 +25,7 @@ public class OpeningsController(IOpeningsService openingsService) : ControllerBa
     [SwaggerResponse(201, Type = typeof(Opening))]
     [SwaggerResponse(400, Type = typeof(ProblemDetails), Description = "Request is invalid. Check response for details.", ContentTypes = ["application/json"])]
     [SwaggerResponse(500, Type = typeof(ProblemDetails), Description = "An error occurred while adding opening. Check response for details.", ContentTypes = ["application/json"])]
-    public async Task<ActionResult<Opening>> AddOpening([FromBody] Opening model)
+    public async Task<ActionResult<OpeningModel>> AddOpening([FromBody] OpeningModel model)
     {
         var (opening, error) = await openingsService.AddOpening(model);
 
