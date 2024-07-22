@@ -1,4 +1,5 @@
-﻿using AniPick.Api.Database;
+﻿using AniPick.Api.Areas.Openings.Models;
+using AniPick.Api.Database;
 using AniPick.Api.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,7 @@ public class OpeningsService(ApplicationDbContext context) : IOpeningsService
         return openings;
     }
     
-    public async Task<(Opening? obj, Exception? error)> AddOpening(Opening model)
+    public async Task<(OpeningModel? obj, Exception? error)> AddOpening(OpeningModel model)
     {
         try
         {
@@ -33,7 +34,7 @@ public class OpeningsService(ApplicationDbContext context) : IOpeningsService
             await context.Openings.AddAsync(opening);
             await context.SaveChangesAsync();
 
-            return (opening, null);
+            return (model, null);
         }
         catch (Exception ex)
         {

@@ -32,7 +32,6 @@
 
     <ItemGroup>
         <Folder Include="Areas\Auth\" />
-        <Folder Include="Areas\Openings\Models\" />
         <Folder Include="Areas\Users\Models\" />
         <Folder Include="Migrations\" />
     </ItemGroup>

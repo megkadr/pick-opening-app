@@ -27,7 +27,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAllHeaders",
         builder =>
         {
-            builder.WithOrigins("https://localhost:5173")
+            builder
+                .WithOrigins(
+                    "http://localhost:5173",
+                    "https://drive.google.com",
+                    "https://*.googleusercontent.com"
+                )
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
