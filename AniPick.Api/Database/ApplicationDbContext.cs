@@ -7,7 +7,11 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {   
     public DbSet<User> Users { get; init; } = default!;
     public DbSet<Opening> Openings { get; init; } = default!;
+    
+    public DbSet<Claim> Claims { get; init; } = default!;
     public DbSet<UserOpenings> UserOpenings { get; init; } = default!;
+    
+    public DbSet<UserClaims> UserClaims { get; init; } = default!;
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

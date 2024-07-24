@@ -21,6 +21,24 @@ namespace AniPick.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("AniPick.Api.Database.Models.Claim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Claims");
+                });
+
             modelBuilder.Entity("AniPick.Api.Database.Models.Opening", b =>
                 {
                     b.Property<int>("Id")
@@ -51,7 +69,7 @@ namespace AniPick.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Openings", "dbo");
+                    b.ToTable("Openings");
                 });
 
             modelBuilder.Entity("AniPick.Api.Database.Models.User", b =>
@@ -81,7 +99,31 @@ namespace AniPick.Api.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users", "dbo");
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AniPick.Api.Database.Models.UserClaims", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClaimId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClaimId");
+
+                    b.HasIndex("UserId", "ClaimId")
+                        .IsUnique();
+
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("AniPick.Api.Database.Models.UserOpenings", b =>
@@ -108,7 +150,26 @@ namespace AniPick.Api.Migrations
                     b.HasIndex("UserId", "Year")
                         .IsUnique();
 
-                    b.ToTable("UserOpenings", "dbo");
+                    b.ToTable("UserOpenings");
+                });
+
+            modelBuilder.Entity("AniPick.Api.Database.Models.UserClaims", b =>
+                {
+                    b.HasOne("AniPick.Api.Database.Models.Claim", "Claim")
+                        .WithMany("UserClaims")
+                        .HasForeignKey("ClaimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AniPick.Api.Database.Models.User", "User")
+                        .WithMany("UserClaims")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Claim");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AniPick.Api.Database.Models.UserOpenings", b =>
@@ -130,6 +191,11 @@ namespace AniPick.Api.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("AniPick.Api.Database.Models.Claim", b =>
+                {
+                    b.Navigation("UserClaims");
+                });
+
             modelBuilder.Entity("AniPick.Api.Database.Models.Opening", b =>
                 {
                     b.Navigation("UserOpenings");
@@ -137,6 +203,8 @@ namespace AniPick.Api.Migrations
 
             modelBuilder.Entity("AniPick.Api.Database.Models.User", b =>
                 {
+                    b.Navigation("UserClaims");
+
                     b.Navigation("UserOpenings");
                 });
 #pragma warning restore 612, 618

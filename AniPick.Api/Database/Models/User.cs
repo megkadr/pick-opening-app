@@ -12,4 +12,6 @@ public class User : BaseDbEntity<int>
     public string Email { get; set; } = default!;
     
     public List<UserOpenings> UserOpenings { get; init; } = [];
+    
+    public List<UserClaims> UserClaims { get; init; } = [];
 }

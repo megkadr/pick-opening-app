@@ -11,12 +11,21 @@ namespace AniPick.Api.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "dbo");
+            migrationBuilder.CreateTable(
+                name: "Claims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Claims", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Openings",
-                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -34,7 +43,6 @@ namespace AniPick.Api.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Users",
-                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -49,8 +57,33 @@ namespace AniPick.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    ClaimId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserClaims_Claims_ClaimId",
+                        column: x => x.ClaimId,
+                        principalTable: "Claims",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserClaims_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserOpenings",
-                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -65,35 +98,41 @@ namespace AniPick.Api.Migrations
                     table.ForeignKey(
                         name: "FK_UserOpenings_Openings_OpeningId",
                         column: x => x.OpeningId,
-                        principalSchema: "dbo",
                         principalTable: "Openings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserOpenings_Users_UserId",
                         column: x => x.UserId,
-                        principalSchema: "dbo",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserClaims_ClaimId",
+                table: "UserClaims",
+                column: "ClaimId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserClaims_UserId_ClaimId",
+                table: "UserClaims",
+                columns: new[] { "UserId", "ClaimId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserOpenings_OpeningId",
-                schema: "dbo",
                 table: "UserOpenings",
                 column: "OpeningId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserOpenings_UserId_Year",
-                schema: "dbo",
                 table: "UserOpenings",
                 columns: new[] { "UserId", "Year" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
-                schema: "dbo",
                 table: "Users",
                 column: "Email",
                 unique: true);
@@ -103,16 +142,19 @@ namespace AniPick.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserOpenings",
-                schema: "dbo");
+                name: "UserClaims");
 
             migrationBuilder.DropTable(
-                name: "Openings",
-                schema: "dbo");
+                name: "UserOpenings");
 
             migrationBuilder.DropTable(
-                name: "Users",
-                schema: "dbo");
+                name: "Claims");
+
+            migrationBuilder.DropTable(
+                name: "Openings");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

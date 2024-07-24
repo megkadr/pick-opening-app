@@ -8,13 +8,11 @@ public class UserOpeningsConfiguration : IEntityTypeConfiguration<UserOpenings>
 {
     public void Configure(EntityTypeBuilder<UserOpenings> userOpeningsConfig)
     {
-        userOpeningsConfig.ToTable(nameof(ApplicationDbContext.UserOpenings), "dbo");
         userOpeningsConfig.HasKey(uo => uo.Id);
         
+        userOpeningsConfig.Property(uo => uo.Year).IsRequired();
         userOpeningsConfig.HasIndex(uo => new { uo.UserId, uo.Year }).IsUnique();
         
-        userOpeningsConfig.Property(uo => uo.Year).IsRequired();
-
         userOpeningsConfig.HasOne(uo => uo.User)
             .WithMany(u => u.UserOpenings)
             .HasForeignKey(uo => uo.UserId)
