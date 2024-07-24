@@ -13,6 +13,7 @@ import { Opening } from "../../../assets/DTO/Opening";
 
 export default function AddAnimeForm() {
     const [formData, setFormData] = useState<Opening>({
+        id: 0,
         title: '',
         openingNumber: 0,
         src: '',
@@ -24,25 +25,14 @@ export default function AddAnimeForm() {
     const [isLoading, setIsLoading] = useState(false);
 
         // Helper function to convert Google Drive viewing link to usable video source
-    function getGoogleDriveVideoUrl(viewingLink: string): string {
-        const fileId = viewingLink.match(/\/d\/(.+?)\/view/)?.[1];
-        return fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : viewingLink;
-    }
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
-        if (id === 'src') {
-            // Convert the src link when it's changed
-            const convertedSrc = getGoogleDriveVideoUrl(value);
-            setFormData(prevData => ({ ...prevData, [id]: convertedSrc }));
-        } else {
-            setFormData(prevData => ({
-                ...prevData,
-                [id]: id === 'openingNumber' || id === 'year' ? 
-                    (value === '' ? 0 : parseInt(value, 10)) : 
-                    value
-            }));
-        }
+        setFormData(prevData => ({
+            ...prevData,
+            [id]: id === 'openingNumber' || id === 'year' ? 
+                (value === '' ? 0 : parseInt(value, 10)) : 
+                value
+        }));
     };
 
     const validate = (): boolean => {
