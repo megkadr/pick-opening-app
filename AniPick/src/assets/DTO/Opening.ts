@@ -1,4 +1,5 @@
 export interface Opening {
+    id: number;
     title: string;
     openingNumber: number;
     src: string;

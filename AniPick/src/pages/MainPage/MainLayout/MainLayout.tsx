@@ -1,49 +1,26 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useState, useEffect, useRef } from 'react';
 import Style from "./MainLayout.module.css";
 import AnimeCard from "./AnimeCard/AnimeCard";
 import YearDisplay from './YearDisplay/YearDisplay';
 import AudioVisualizer from '../../../components/AudioVisualizer/AudioVisualizer';
-import video1 from "../../../assets/videos/kaiju.mp4";
-import video2 from "../../../assets/videos/mashle.mp4";
-import video3 from "../../../assets/videos/solo_leveling.mp4";
-import video4 from "../../../assets/videos/drifters.mp4";
-import video5 from "../../../assets/videos/naruto.mp4";
-import video6 from "../../../assets/videos/tanya_evil.mp4";
 import backgroundTransition from "../../../assets/images/todo_background.png";
 import clapAudio from "../../../assets/audio/clap.mp3";
+import { getOpeningsByYear } from '../../../utils/RequestServices/OpeningsService';
+import { Opening } from '../../../assets/DTO/Opening';
 
-const BATCHES = [
-  [
-    { src: video1, title: "kaiju", openingNumber: 1 },
-    { src: video2, title: "mashle", openingNumber: 2 },
-    { src: video3, title: "solo_leveling", openingNumber: 1 },
-    { src: video4, title: "drifters", openingNumber: 1 },
-    { src: video5, title: "naruto", openingNumber: 4 },
-    { src: video6, title: "tanya_evil", openingNumber: 1 },
-  ],
-  [
-    { src: video3, title: "kaiju", openingNumber: 1 },
-    { src: video2, title: "mashle", openingNumber: 2 },
-    { src: video1, title: "solo_leveling", openingNumber: 1 },
-    { src: video4, title: "drifters", openingNumber: 1 },
-    { src: video5, title: "naruto", openingNumber: 4 },
-    { src: video6, title: "tanya_evil", openingNumber: 1 },
-  ],
-];
 
 const MainLayout = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [currentBatchIndex, setCurrentBatchIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const [year, setYear] = useState(2000);
+  const [openings, setOpenings] = useState<Opening[]>([]);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const clapAudioRef = useRef<HTMLAudioElement | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
   const [showTitles, setShowTitles] = useState<boolean[]>(Array(6).fill(false));
-
-  const currentSet = BATCHES[currentBatchIndex];
 
   useEffect(() => {
     clapAudioRef.current = new Audio(clapAudio);
@@ -62,7 +39,7 @@ const MainLayout = () => {
             newTitles[currentVideoIndex] = true;
             return newTitles;
           });
-          if (currentVideoIndex < currentSet.length - 1) {
+          if (currentVideoIndex < openings.length - 1) {
             setCurrentVideoIndex(prevIndex => prevIndex + 1);
           } else {
             setIsPlaying(false);
@@ -70,39 +47,16 @@ const MainLayout = () => {
         };
       }
     }
-  }, [currentVideoIndex, isPlaying, currentSet]);
+  }, [currentVideoIndex, isPlaying, openings]);
 
-  const handleCardClick = (index: number) => {
-    if (!isPlaying) {
-      if (currentBatchIndex < BATCHES.length - 1) {
-        setCurrentBatchIndex(prev => prev + 1);
-        setShowTitles(Array(6).fill(false)); // Reset titles for new batch
-        setIsTransitioning(true);
-        setShowBackground(true);
-        playClapSound();
-        setYear(prevYear => prevYear + 1);
-        setTimeout(() => {
-          setCurrentVideoIndex(0);
-          setIsPlaying(true);
-          setIsTransitioning(false);
-          setShowBackground(false);
-        }, 1000);
-      } else {
-        console.log("End of batches");
-      }
+  const fetchOpenings = async (year: number) => {
+    try {
+      const data = await getOpeningsByYear(year);
+      console.log("Openings fetched successfully data:", data);
+      setOpenings(data);
+    } catch (error) {
+      console.error("Error fetching openings:", error);
     }
-  };
-
-  const handleButtonClick = () => {
-    setShowButton(false);
-    setIsTransitioning(true);
-    setShowBackground(true);
-    playClapSound();
-    setTimeout(() => {
-      setIsPlaying(true);
-      setIsTransitioning(false);
-      setShowBackground(false);
-    }, 1000);
   };
 
   const playClapSound = () => {
@@ -112,6 +66,42 @@ const MainLayout = () => {
         console.error("Error playing clap sound:", error);
       });
     }
+  };
+
+  const handleCardClick = async (index: number) => {
+    if (!isPlaying) {
+      const newYear = year + 1;
+      console.log("newYear", newYear);
+      if (newYear !== 2001) {
+        setCurrentVideoIndex(0);
+        setShowTitles(Array(6).fill(false)); // Reset titles for new batch
+        setIsTransitioning(true);
+        setShowBackground(true);
+        playClapSound();
+        setYear(newYear);
+        await fetchOpenings(newYear);
+        setTimeout(() => {
+          setIsPlaying(true);
+          setIsTransitioning(false);
+          setShowBackground(false);
+        }, 1000);
+      } else {
+        console.log("This is end");
+      }
+    }
+  };
+
+  const handleButtonClick = async () => {
+    setShowButton(false);
+    setIsTransitioning(true);
+    setShowBackground(true);
+    playClapSound();
+    await fetchOpenings(year);
+    setTimeout(() => {
+      setIsPlaying(true);
+      setIsTransitioning(false);
+      setShowBackground(false);
+    }, 1000);
   };
 
   return (
@@ -132,7 +122,7 @@ const MainLayout = () => {
           <button className={Style.playButton} onClick={handleButtonClick}>Play</button>
         )}
         {!showButton && (
-          currentSet.map((video, index) => (
+          openings.map((video, index) => (
             <AnimeCard
               key={index}
               src={video.src}
