@@ -59,8 +59,7 @@ export default function AddAnimeForm() {
         if (validate()) {
             setIsLoading(true);
             try {
-                const response = await addAnimeOpening(formData);
-                console.log('Opening added successfully:', response.data);
+                await addAnimeOpening(formData);
                 // Reset form or show success message
             } catch (error) {
                 console.error('Error adding opening:', error);

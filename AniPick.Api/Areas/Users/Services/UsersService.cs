@@ -1,4 +1,5 @@
-﻿using AniPick.Api.Database;
+﻿using System.Net;
+using AniPick.Api.Database;
 using AniPick.Api.Database.Models;
 using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
@@ -37,10 +38,23 @@ public class UsersService(ApplicationDbContext context) : IUsersService
             {
                 Name = model.Name,
                 Email = model.Email,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.PasswordHash)
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.PasswordHash),
             };
 
             await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
+
+            // Get the ID of the newly added user
+            var newUserId = user.Id;
+
+            // Add UserClaims record with the new user ID
+            var userClaim = new UserClaims
+            {
+                UserId = newUserId,
+                ClaimId = 3
+            };
+
+            await context.UserClaims.AddAsync(userClaim);
             await context.SaveChangesAsync();
 
             return (user, null);
@@ -68,5 +82,48 @@ public class UsersService(ApplicationDbContext context) : IUsersService
         }
 
         return (false, null, null);
+    }
+    
+    public async Task<(HttpStatusCode statusCode, Exception? error)> RemoveUser(int userId)
+    {
+        try
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user != null)
+            {
+                context.Users.Remove(user);
+                await context.SaveChangesAsync();
+                return (HttpStatusCode.OK, null);
+            }
+            else
+            {
+                return (HttpStatusCode.NotFound, new Exception("User not found"));
+            }
+        }
+        catch (Exception ex)
+        {
+            return (HttpStatusCode.InternalServerError, ex);
+        }
+    }
+    
+    public async Task<(HttpStatusCode statusCode, Exception? error)> ChangePassword(int userId, string newPassword)
+    {
+        try
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return (HttpStatusCode.NotFound, new Exception("User not found"));
+            }
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            await context.SaveChangesAsync();
+            return (HttpStatusCode.OK, null);
+        }
+        catch (Exception ex)
+        {
+            return (HttpStatusCode.InternalServerError, ex);
+        }
     }
 }
