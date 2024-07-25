@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using AniPick.Api;
 using AniPick.Api.Areas.Openings.Services;
+using AniPick.Api.Areas.Users.Services;
 using AniPick.Api.Swagger;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<IOpeningsService, OpeningsService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
 
 builder.Services.AddSwagger();
 builder.Services.AddHealthChecks();

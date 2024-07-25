@@ -9,7 +9,6 @@ import clapAudio from "../../../assets/audio/clap.mp3";
 import { getOpeningsByYear } from '../../../utils/RequestServices/OpeningsService';
 import { Opening } from '../../../assets/DTO/Opening';
 
-
 const MainLayout = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -21,6 +20,7 @@ const MainLayout = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
   const [showTitles, setShowTitles] = useState<boolean[]>(Array(6).fill(false));
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     clapAudioRef.current = new Audio(clapAudio);
@@ -49,10 +49,13 @@ const MainLayout = () => {
     }
   }, [currentVideoIndex, isPlaying, openings]);
 
+  useEffect(() => {
+    console.log("Updated openings");
+  }, [openings]);
+
   const fetchOpenings = async (year: number) => {
     try {
       const data = await getOpeningsByYear(year);
-      console.log("Openings fetched successfully data:", data);
       setOpenings(data);
     } catch (error) {
       console.error("Error fetching openings:", error);
@@ -71,8 +74,7 @@ const MainLayout = () => {
   const handleCardClick = async (index: number) => {
     if (!isPlaying) {
       const newYear = year + 1;
-      console.log("newYear", newYear);
-      if (newYear !== 2001) {
+      if (newYear !== currentYear+1) {
         setCurrentVideoIndex(0);
         setShowTitles(Array(6).fill(false)); // Reset titles for new batch
         setIsTransitioning(true);

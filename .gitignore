@@ -392,6 +392,9 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# Configuration files
+appsettings.json
+appsettings.*.json
 
 # Add new stuff below this line if needed.
 # For patterns see: https://git-scm.com/docs/gitignore

@@ -1,0 +1,31 @@
+.containerForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    min-height: 94vh;
+    background-color: #191919;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #0f1214;
+    padding: 2rem;
+    color: #1976d2;
+    border-radius: 1rem;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.formContainer input {
+    color: #1976d2;
+}
