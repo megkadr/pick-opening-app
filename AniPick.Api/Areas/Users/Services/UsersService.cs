@@ -69,7 +69,9 @@ public class UsersService(ApplicationDbContext context) : IUsersService
     {
         try
         {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.Name == login);
+            var user = await context.Users
+                .Include(u => u.UserClaims)
+                .FirstOrDefaultAsync(u => u.Name == login);
 
             if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
