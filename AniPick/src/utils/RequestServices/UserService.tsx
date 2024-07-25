@@ -10,12 +10,13 @@ export async function addUser(request: User) {
     return await axiosClient.post("/Users/user/register", request);
 }
 
-export async function login(request: {login: string, password: string}) {
+export async function login(request: {login: string, password: string}): Promise<User> {
     const params = {
         login: request.login,
         password: request.password
     }
-    return await axiosClient.get("/Openings/opening",  {params});
+    const response = await axiosClient.get<User>("/Users/login", {params});
+    return response.data;
 }
 
 export async function addUserOpening(request: UserClaims) {
