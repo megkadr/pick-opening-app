@@ -147,8 +147,7 @@ namespace AniPick.Api.Migrations
 
                     b.HasIndex("OpeningId");
 
-                    b.HasIndex("UserId", "Year")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserOpenings");
                 });

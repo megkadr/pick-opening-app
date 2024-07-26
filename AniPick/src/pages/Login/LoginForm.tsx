@@ -60,11 +60,7 @@ export default function Login() {
         setLoading(true);
         setError('');
         try {
-            console.log("formData");
-            console.log(formData);
-            const response = await login(formData);
-            console.log('User logged in successfully:', response);
-            
+            const response = await login(formData);      
             if (response) {
                 setAuthUser(response);
                 navigate('/mainPage');

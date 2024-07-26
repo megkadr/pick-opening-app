@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using AniPick.Api.Areas.Users.Models;
 using AniPick.Api.Database;
 using AniPick.Api.Database.Models;
 using BCrypt.Net;
@@ -8,7 +9,7 @@ namespace AniPick.Api.Areas.Users.Services;
 
 public class UsersService(ApplicationDbContext context) : IUsersService
 {
-    public async Task<(UserOpenings? obj, Exception? error)> AddChosenByUserOpening(UserOpenings model)
+    public async Task<(AddOpeningModel? obj, Exception? error)> AddChosenByUserOpening(AddOpeningModel model)
     {
         try
         {
@@ -22,7 +23,7 @@ public class UsersService(ApplicationDbContext context) : IUsersService
             await context.UserOpenings.AddAsync(openingChosenByUser);
             await context.SaveChangesAsync();
 
-            return (openingChosenByUser, null);
+            return (model, null);
         }
         catch (Exception ex)
         {

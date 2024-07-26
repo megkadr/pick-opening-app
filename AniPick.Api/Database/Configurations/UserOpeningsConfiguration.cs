@@ -11,7 +11,6 @@ public class UserOpeningsConfiguration : IEntityTypeConfiguration<UserOpenings>
         userOpeningsConfig.HasKey(uo => uo.Id);
         
         userOpeningsConfig.Property(uo => uo.Year).IsRequired();
-        userOpeningsConfig.HasIndex(uo => new { uo.UserId, uo.Year }).IsUnique();
         
         userOpeningsConfig.HasOne(uo => uo.User)
             .WithMany(u => u.UserOpenings)
