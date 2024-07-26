@@ -1,0 +1,1 @@
+import{a as n}from"./AxiosClient-CAsDCr3W.js";async function e(s){return await n.post("/Users/user/register",s)}async function t(s){const a={login:s.login,password:s.password};return(await n.get("/Users/login",{params:a})).data}async function i(s){return await n.post("/Users/opening",s)}export{i as a,e as b,t as l};
