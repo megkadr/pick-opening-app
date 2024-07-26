@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/bae540cc-82ba-42dd-8791-c5cbf602164e/resourceGroups/AniPickWeb/providers/Microsoft.Web/sites/AniPickWeb",
+    "appService.deploySubpath": "AniPick\\dist"
+}

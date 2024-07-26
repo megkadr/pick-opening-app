@@ -35,8 +35,8 @@ builder.Services.AddCors(options =>
             builder
                 .WithOrigins(
                     "http://localhost:5173",
-                    "https://drive.google.com",
-                    "https://*.googleusercontent.com"
+                    "https://anipickweb.azurewebsites.net/",
+                    "https://localhost:3000"
                 )
                 .AllowAnyHeader()
                 .AllowAnyMethod()
