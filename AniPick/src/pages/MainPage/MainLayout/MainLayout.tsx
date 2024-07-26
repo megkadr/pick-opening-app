@@ -111,7 +111,6 @@ const MainLayout = () => {
       } else {
         setShowButton(false);
         setShowEnding(true);
-        console.log("This is end");
       }
     }
   };
