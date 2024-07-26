@@ -35,7 +35,7 @@ builder.Services.AddCors(options =>
             builder
                 .WithOrigins(
                     "http://localhost:5173",
-                    "https://anipickweb.azurewebsites.net/",
+                    "https://anipickweb.azurewebsites.net",
                     "https://localhost:3000"
                 )
                 .AllowAnyHeader()
@@ -43,6 +43,7 @@ builder.Services.AddCors(options =>
                 .AllowCredentials();
         });
 });
+
 
 builder.Services.AddScoped<IOpeningsService, OpeningsService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
@@ -65,7 +66,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.Cookie.HttpOnly = true;
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.Cookie.Name = "CalendarDylik.Authentication";
+    options.Cookie.Name = "AniPick.Authentication";
     options.ExpireTimeSpan = TimeSpan.FromDays(4);
     options.Cookie.IsEssential = true;
     options.SlidingExpiration = true;
