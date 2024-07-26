@@ -13,8 +13,11 @@ import { useState } from 'react';
 import Style from './Registration.module.css';
 import { addUser } from '../../utils/RequestServices/UserService'; // Import the addUser function
 import { Alert, CircularProgress } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function Registration() {
+    const navigate = useNavigate();
+
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -67,9 +70,8 @@ export default function Registration() {
                 userOpenings: [],
                 userClaims: [],
             };
-            const response = await addUser(userData);
-            console.log('User registered successfully:', response.data);
-            // Handle successful registration (e.g., show success message, redirect)
+            await addUser(userData);
+            navigate('/login');
         } catch (error) {
             console.error('Registration failed:', error);
             setError('Registration failed. Please try again.');

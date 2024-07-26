@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { User } from "../../assets/DTO/User";
-import { UserClaims } from "../../assets/DTO/UserClaims";
+import { UserOpeningModel } from "../../assets/DTO/UserOpeningModel";
 import { axiosClient } from "./AxiosClient";
 
 export async function addUser(request: User) {
@@ -19,7 +19,7 @@ export async function login(request: {login: string, password: string}): Promise
     return response.data;
 }
 
-export async function addUserOpening(request: UserClaims) {
+export async function addUserOpening(request: UserOpeningModel) {
     return await axiosClient.post("/Users/opening", request);
 }
 

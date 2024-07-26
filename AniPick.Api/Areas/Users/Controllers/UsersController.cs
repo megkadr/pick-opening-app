@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using AniPick.Api.Areas.Users.Models;
 using AniPick.Api.Areas.Users.Services;
 using AniPick.Api.Database.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -69,7 +70,7 @@ public class UsersController(IUsersService usersService) : ControllerBase
     [HttpPost("opening")]
     [ProducesResponseType(typeof(UserOpenings), 201)]
     [ProducesResponseType(typeof(string), 400)]
-    public async Task<IActionResult> AddChosenByUserOpening([FromBody] UserOpenings model)
+    public async Task<IActionResult> AddChosenByUserOpening([FromBody] AddOpeningModel model)
     {
         var (userOpenings, error) = await usersService.AddChosenByUserOpening(model);
 
