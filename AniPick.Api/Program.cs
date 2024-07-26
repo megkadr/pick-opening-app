@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDistributedMemoryCache();
@@ -43,7 +42,6 @@ builder.Services.AddCors(options =>
                 .AllowCredentials();
         });
 });
-
 
 builder.Services.AddScoped<IOpeningsService, OpeningsService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
