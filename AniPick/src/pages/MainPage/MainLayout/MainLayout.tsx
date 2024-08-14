@@ -12,6 +12,7 @@ import { addUserOpening  } from '../../../utils/RequestServices/UserService';
 import { Opening } from '../../../assets/DTO/Opening';
 import { useAuthStore } from '../../../utils/contextStore/authStore';
 import { UserOpeningModel } from '../../../assets/DTO/UserOpeningModel';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const MainLayout = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
@@ -19,6 +20,7 @@ const MainLayout = () => {
   const [showButton, setShowButton] = useState(true);
   const [year, setYear] = useState(2000);
   const [openings, setOpenings] = useState<Opening[]>([]);
+  const [loading, setLoading] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const clapAudioRef = useRef<HTMLAudioElement | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -60,11 +62,14 @@ const MainLayout = () => {
   }, [openings]);
 
   const fetchOpenings = async (year: number) => {
+    setLoading(true);
     try {
       const data = await getOpeningsByYear(year);
       setOpenings(data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching openings:", error);
+      setLoading(false);
     }
   };
 
@@ -149,19 +154,23 @@ const MainLayout = () => {
           <button className={Style.playButton} onClick={handleButtonClick}>Play</button>
         )}
         {!showButton && !showEnding && (
-          openings.map((video, index) => (
-            <AnimeCard
-              key={index}
-              src={video.src}
-              openingNumber={video.openingNumber}
-              title={video.title}
-              onClick={() => handleCardClick(video.id)}
-              ref={el => videoRefs.current[index] = el}
-              className={Style.cardItem}
-              showTitle={showTitles[index]}
-              videoNumber={index + 1}
-            />
-          ))
+          loading && !isTransitioning ? (
+            <CircularProgress style={{ height: '14rem', width: '14rem',position: 'absolute', color: 'red'}} />
+          ) : (
+            openings.map((video, index) => (
+              <AnimeCard
+                key={index}
+                src={video.src}
+                openingNumber={video.openingNumber}
+                title={video.title}
+                onClick={() => handleCardClick(video.id)}
+                ref={el => videoRefs.current[index] = el}
+                className={Style.cardItem}
+                showTitle={showTitles[index]}
+                videoNumber={index + 1}
+              />
+            ))
+          )
         )}
       </div>
       <audio ref={clapAudioRef} src={clapAudio} />

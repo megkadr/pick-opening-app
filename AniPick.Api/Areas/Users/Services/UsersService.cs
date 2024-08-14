@@ -71,6 +71,7 @@ public class UsersService(ApplicationDbContext context) : IUsersService
         try
         {
             var user = await context.Users
+                .AsNoTracking()
                 .Include(u => u.UserClaims)
                 .FirstOrDefaultAsync(u => u.Name == login);
 

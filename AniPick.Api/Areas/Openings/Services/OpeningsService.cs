@@ -10,11 +10,11 @@ public class OpeningsService(ApplicationDbContext context) : IOpeningsService
     public async Task<List<Opening>> GetRandomOpeningsByYear(int year)
     {
         var openings = await context.Openings
+            .AsNoTracking()
             .Where(o => o.Year == year)
-            .OrderBy(o => Guid.NewGuid())
+            .OrderBy(o => EF.Functions.Random())
             .Take(6)
             .ToListAsync();
-
         return openings;
     }
     

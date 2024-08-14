@@ -26,21 +26,24 @@ builder.Services.AddControllers()
         options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
     });
 
+
+const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllHeaders",
-        builder =>
-        {
-            builder
-                .WithOrigins(
-                    "http://localhost:5173",
-                    "https://anipickweb.azurewebsites.net",
-                    "https://localhost:3000"
-                )
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-        });
+    options.AddPolicy(name: myAllowSpecificOrigins,
+                    policy  =>
+                    {
+                        policy.WithOrigins(
+                            "http://localhost:5173",
+                            "https://anipickweb.azurewebsites.net",
+                            "https://localhost:3000",
+                            "https://localhost:44324"
+                        )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                    });
 });
 
 builder.Services.AddScoped<IOpeningsService, OpeningsService>();
@@ -93,7 +96,8 @@ else
     app.UseHsts();
 }
 
-app.UseCors("AllowAllHeaders");
+app.UseCors(myAllowSpecificOrigins);
+
 app.UseRouting();
 
 app.UseAuthentication();

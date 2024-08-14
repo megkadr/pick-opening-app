@@ -29,7 +29,7 @@ export default function NavBar() {
         <Link to="/mainPage" className={Style.siteTitle}>AniPick</Link>
         <ul>
             <CustomLink to="/mainPage">Pick Anime</CustomLink>
-            {isLoggedIn && hasAddAnimeClaim && <CustomLink to="/add-anime">Add Anime</CustomLink>}
+            {isLoggedIn && hasAddAnimeClaim &&<CustomLink to="/add-anime">Add Anime</CustomLink>}
             {!isLoggedIn && (
             <>
                 <CustomLink to="/login">Login</CustomLink>
