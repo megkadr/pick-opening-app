@@ -138,4 +138,61 @@ public class UsersController(IUsersService usersService) : ControllerBase
             _ => StatusCode(StatusCodes.Status500InternalServerError, "Internal server error")
         };
     }
+    
+    /// <summary>
+    /// Get user account details
+    /// </summary>
+    /// <param name="model">User account details</param>
+    /// <returns>User account details</returns>
+    /// <response code="201">Data received</response>
+    /// <response code="404">Data getting error</response>
+    /// <response code="500">Internal server error</response>
+    [HttpGet("user/accountDetails")]
+    [ProducesResponseType(typeof(User), 201)]
+    [ProducesResponseType(typeof(string), 400)]
+    [ProducesResponseType(typeof(string), 404)]
+    [ProducesResponseType(typeof(string), 500)]
+    public async Task<IActionResult> GetUserAccountDetails(int userId)
+    {
+        var (userAccountDetails, error) = await usersService.GetUserAccountDetails(userId);
+
+        if (error != null)
+        {
+            if (error.Message == "User not found") { return NotFound("User not found"); }
+            return StatusCode(500, "Internal server error: " + error.Message);
+        }
+
+        if (userAccountDetails == null) { return BadRequest("Invalid user data"); }
+
+        return Ok(userAccountDetails);
+    }
+    
+    /// <summary>
+    /// Change user password
+    /// </summary>
+    /// <param name="userId">User ID</param>
+    /// <param name="currentPassword">User login (email)</param>
+    /// <param name="newPassword">User password</param>
+    /// <returns>Change password of user</returns>
+    /// <response code="200">Password changed</response>
+    /// <response code="401">Invalid credentials</response>
+    [HttpGet("changePassword")]
+    [ProducesResponseType(typeof(bool), 200)]
+    [ProducesResponseType(typeof(string), 401)]
+    public async Task<IActionResult> ChangePassword([FromQuery] int userId, [FromQuery] string currentPassword, [FromQuery] string newPassword)
+    {
+        var (isSuccess, error) = await usersService.ChangePassword(userId, currentPassword, newPassword);
+
+        if (error != null)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+        if (isSuccess)
+        {
+            return Ok();
+        }
+        
+        return Unauthorized("Invalid credentials");
+    }
 }

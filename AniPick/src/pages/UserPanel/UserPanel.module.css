@@ -21,3 +21,9 @@
     color: #1976d2;
     border-radius: 1rem;
 }
+
+.passwordsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -11,4 +11,6 @@ public interface IUsersService
     Task<(bool isAuthenticated, User? obj, Exception? error)> VerifyUser(string login, string password);
     Task<(HttpStatusCode statusCode, Exception? error)> RemoveUser(int userId);
     Task<(HttpStatusCode statusCode, Exception? error)> ChangePassword(int userId, string newPassword);
+    Task<(AccountDetailsModel? obj, Exception? error)> GetUserAccountDetails(int userId);
+    Task<(bool isSuccess, Exception? error)> ChangePassword(int userId, string currentPassword, string newPassword);
 }

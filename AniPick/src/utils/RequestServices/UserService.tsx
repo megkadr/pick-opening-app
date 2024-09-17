@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+import AccountDetailsModel from "../../assets/DTO/AccountDetailsModel";
 import { User } from "../../assets/DTO/User";
 import { UserOpeningModel } from "../../assets/DTO/UserOpeningModel";
 import { axiosClient } from "./AxiosClient";
@@ -29,4 +30,18 @@ export async function removeUser(id: number) {
 
 export async function changeUserPassword(id: number) {
     return await axiosClient.put(`/Users/user/password/${id}`);
+}
+
+export async function getUserAccountDetails(userId: number) {
+    return await axiosClient.get<AccountDetailsModel>(`/Users/user/accountDetails?userId=${userId}`);
+}
+
+export async function changePassword(request: {userId: number, currentPassword: string, newPassword: string}) {
+    const params = {
+        userId: request.userId,
+        currentPassword: request.currentPassword,
+        newPassword: request.newPassword
+    }
+    const response = await axiosClient.get("/Users/changePassword", {params});
+    return response;
 }
