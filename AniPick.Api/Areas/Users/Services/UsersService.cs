@@ -130,4 +130,81 @@ public class UsersService(ApplicationDbContext context) : IUsersService
             return (HttpStatusCode.InternalServerError, ex);
         }
     }
+    public async Task<(AccountDetailsModel? obj, Exception? error)> GetUserAccountDetails(int userId)
+    {
+        try
+        {
+            var user = await context.Users
+                .AsNoTracking()
+                .Include(u => u.UserOpenings)
+                .ThenInclude(uo => uo.Opening)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            
+            var userOpeningsGrouped = user?.UserOpenings
+                .GroupBy(uo => uo.Year)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            var userFavouriteOpenings = new List<UserFavouriteOpening>();
+
+            if (userOpeningsGrouped != null)
+                foreach (var yearGroup in userOpeningsGrouped)
+                {
+                    var mostClickedOpening = yearGroup.Value
+                        .GroupBy(uo => uo.OpeningId)
+                        .Select(g => new
+                        {
+                            Opening = g.First().Opening,
+                            ClickCount = g.Count()
+                        }).MaxBy(x => x.ClickCount);
+
+                    if (mostClickedOpening != null)
+                    {
+                        userFavouriteOpenings.Add(new UserFavouriteOpening
+                        {
+                            Name = mostClickedOpening.Opening.Title,
+                            Year = yearGroup.Key,
+                            OpeningNumber = mostClickedOpening.Opening.OpeningNumber,
+                            OpeningClickCount = mostClickedOpening.ClickCount
+                        });
+                    }
+                }
+
+            var favoriteOpening = userFavouriteOpenings.MaxBy(uo => uo.OpeningClickCount);
+
+            var userAccountDetails = new AccountDetailsModel()
+            {
+                Name = user?.Name,
+                FavoriteOpeningName = favoriteOpening?.Name ?? string.Empty,
+                FavoriteOpeningClickCount = favoriteOpening?.OpeningClickCount.ToString() ?? "0",
+                UserFavouriteOpenings = userFavouriteOpenings
+            };
+            
+            return (userAccountDetails, null);
+        }
+        catch (Exception ex)
+        {
+            return (null, ex);
+        }
+    }
+    
+    public async Task<(bool isSuccess, Exception? error)> ChangePassword(int userId, string currentPassword, string newPassword)
+    {
+        try
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user != null && BCrypt.Net.BCrypt.Verify(currentPassword, user.PasswordHash))
+            {
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+                await context.SaveChangesAsync();
+                return (true, null);
+            }
+        }
+        catch (Exception ex)
+        {
+            return (false, ex);
+        }
+
+        return (false, null);
+    }
 }

@@ -154,7 +154,7 @@ const MainLayout = () => {
           <button className={Style.playButton} onClick={handleButtonClick}>Play</button>
         )}
         {!showButton && !showEnding && (
-          loading && !isTransitioning ? (
+          loading && !showBackground ? (
             <CircularProgress style={{ height: '14rem', width: '14rem',position: 'absolute', color: 'red'}} />
           ) : (
             openings.map((video, index) => (
