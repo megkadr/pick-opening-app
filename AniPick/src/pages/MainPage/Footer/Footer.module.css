@@ -17,9 +17,11 @@
 .contactInfo {
     display: flex;
     gap: 1rem;
+    text-decoration: none;
+    color: #6c6c6c;
 }
     .contactInfo *:hover  {
-        color: #95b6d0;
+        color: #95b6d0 !important;
         cursor: pointer;
     }
 

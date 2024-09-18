@@ -1,6 +1,6 @@
 import Style from "./Footer.module.css";
 import PayPalLogo from "../../../assets/images/PayPalLogo.png";
-import PatreonLogo from "../../../assets/images/PatreonLogo.png";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -13,7 +13,7 @@ export default function Footer() {
           </div>
           <div className={Style.contactInfo}>
             <span>Contact</span>
-            <span>About</span>
+            <Link to={"/about"} style={{ textDecoration: "none", color: "#6c6c6c" }}>About</Link>
           </div>
         </div>
         <div className={Style.termsContainer}>
@@ -21,7 +21,6 @@ export default function Footer() {
           <div className={Style.support}>
             <span>Support:</span>
             <a href="https://www.paypal.com/donate/?hosted_button_id=3EPYZKTUG29SW"><img alt="PayPal Logo" src={PayPalLogo}/></a>
-            <a><img alt="Patreon Logo" src={PatreonLogo}/></a>
           </div>
           <p>
             AniPick is a fan-based project and is not affiliated with any anime production companies. 
