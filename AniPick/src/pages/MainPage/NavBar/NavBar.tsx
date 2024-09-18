@@ -36,6 +36,7 @@ export default function NavBar() {
                 <CustomLink to="/register">Register</CustomLink>
             </>
             )}
+            <CustomLink to="/about">About</CustomLink>
             {isLoggedIn && (
             <>
                 <CustomLink to="/userPanel">UserPanel</CustomLink>
