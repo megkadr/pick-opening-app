@@ -1,8 +1,19 @@
 import Style from "./Footer.module.css";
 import PayPalLogo from "../../../assets/images/PayPalLogo.png";
 import { Link } from "react-router-dom";
-
+import ContactModal from "../../../components/Modals/ContactModal"
+import { useState } from "react";
 export default function Footer() {
+  const [openContact, setOpenContact] = useState(false);
+
+  const handleContactClick = () => {
+    setOpenContact(true);
+  };
+
+  const handleCloseContact = () => {
+    setOpenContact(false);
+  };
+
   return (
     <>
       <footer className={Style.footer}>
@@ -12,7 +23,7 @@ export default function Footer() {
             <p>All anime content is used under fair use for commentary and educational purposes.</p>
           </div>
           <div className={Style.contactInfo}>
-            <span>Contact</span>
+            <span onClick={handleContactClick} style={{ cursor: 'pointer' }}>Contact</span>
             <Link to={"/about"} style={{ textDecoration: "none", color: "#6c6c6c" }}>About</Link>
           </div>
         </div>
@@ -31,6 +42,7 @@ export default function Footer() {
           </p>
         </div>
       </footer>
+      <ContactModal open={openContact} onClose={handleCloseContact} />
     </>
   );
 }
