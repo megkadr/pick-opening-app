@@ -3,6 +3,7 @@ using AniPick.Api.Areas.Users.Models;
 using AniPick.Api.Areas.Users.Services;
 using AniPick.Api.Database.Models;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AniPick.Api.Areas.Users.Controllers;
 
@@ -194,5 +195,17 @@ public class UsersController(IUsersService usersService) : ControllerBase
         }
         
         return Unauthorized("Invalid credentials");
+    }
+    
+    [HttpGet("isAuthenticated")]
+    [SwaggerResponse(200)]
+    [SwaggerResponse(401)]
+    [SwaggerOperation("Method for checking if user is authenticated")]
+    public IActionResult IsAuthenticated(int userId)
+    {
+        if (userId != 0)
+            return Ok();
+
+        return Unauthorized();
     }
 }
