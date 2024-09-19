@@ -41,4 +41,28 @@ public class OpeningsService(ApplicationDbContext context) : IOpeningsService
             return (null, ex);
         }
     }
+    
+    public async Task<List<OpeningsByYear>> GetAllOpeningsByYear()
+    {
+        var openings = await context.Openings
+            .AsNoTracking()
+            .OrderBy(o => o.Year)
+            .ToListAsync();
+
+        var groupedOpenings = openings.GroupBy(o => o.Year)
+            .Select(g => new OpeningsByYear
+            {
+                Year = g.Key,
+                Openings = g.Select(o => new OpeningModel
+                {
+                    Title = o.Title.Trim(),
+                    OpeningNumber = o.OpeningNumber,
+                    Src = o.Src.Trim(),
+                    Year = o.Year,
+                    SerieName = o.SerieName.Trim()
+                }).ToList()
+            }).ToList();
+
+        return groupedOpenings;
+    }
 }

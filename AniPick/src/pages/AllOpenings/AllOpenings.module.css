@@ -1,0 +1,23 @@
+.mainLayout {
+    display: flex;
+    min-height: 94vh;
+    flex-direction: column;
+    background-color: #191919;
+    align-items: center;
+    padding: 1rem;
+}
+
+.allOpeningsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #0f1214;
+    padding: 2.5rem;
+    gap: 0.5rem;
+    color: #e0e0e0;
+    border-radius: 1rem;
+    max-width: 90ch;
+    margin-top: 6vh;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}

@@ -36,4 +36,14 @@ public class OpeningsController(IOpeningsService openingsService) : ControllerBa
 
         return CreatedAtAction(nameof(AddOpening), opening);
     }
+    
+    [HttpGet("allOpenings")]
+    [SwaggerResponse(200, Type = typeof(List<OpeningsByYear>))]
+    [SwaggerResponse(400, Type = typeof(ProblemDetails), Description = "Request is invalid. Check response for details.", ContentTypes = ["application/json"])]
+    [SwaggerResponse(500, Type = typeof(ProblemDetails), Description = "An error occurred while retrieving openings. Check response for details.", ContentTypes = ["application/json"])]
+    public async Task<ActionResult<List<OpeningsByYear>>> GetAllOpenings()
+    {
+        var openings = await openingsService.GetAllOpeningsByYear();
+        return Ok(openings);
+    }
 }

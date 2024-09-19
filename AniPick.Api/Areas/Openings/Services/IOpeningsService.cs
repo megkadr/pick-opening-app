@@ -7,4 +7,5 @@ public interface IOpeningsService
 {
     Task<List<Opening>> GetRandomOpeningsByYear(int year);
     Task<(OpeningModel? obj, Exception? error)> AddOpening(OpeningModel model);
+    Task<List<OpeningsByYear>> GetAllOpeningsByYear();
 }
