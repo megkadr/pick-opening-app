@@ -11,8 +11,11 @@ import { getOpeningsByYear } from '../../../utils/RequestServices/OpeningsServic
 import { addUserOpening  } from '../../../utils/RequestServices/UserService';
 import { Opening } from '../../../assets/DTO/Opening';
 import { useAuthStore } from '../../../utils/contextStore/authStore';
+import { useWelcomeDialogStore  } from '../../../utils/contextStore/welcomeDialogStore';
 import { UserOpeningModel } from '../../../assets/DTO/UserOpeningModel';
 import CircularProgress from '@mui/material/CircularProgress';
+import WelcomeDialog from '../../../components/Modals/WelcomeDialog';
+import { useNavigate } from 'react-router-dom';
 
 const MainLayout = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
@@ -29,7 +32,13 @@ const MainLayout = () => {
   const [showTitles, setShowTitles] = useState<boolean[]>(Array(6).fill(false));
   const currentYear = new Date().getFullYear();
   const user = useAuthStore(state => state.user);
-  
+  const { checkAndShowWelcomeDialog } = useWelcomeDialogStore();
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    checkAndShowWelcomeDialog();
+  }, [checkAndShowWelcomeDialog]);
+
   useEffect(() => {
     clapAudioRef.current = new Audio(clapAudio);
   }, []);
@@ -85,35 +94,41 @@ const MainLayout = () => {
   const handleCardClick = async (index: number) => {
     if (!isPlaying) {
       const newYear = year + 1;
-      if (newYear !== currentYear+1) {
+      
+      // Always save user claims when user selects an opening, even for the last year
+      if (user) {
+        const userId = user.id; // Assuming the user object has an 'id' property
+        const openingId = index; // This should be the id of the selected opening
+        const request: UserOpeningModel = {
+          userId,
+          openingId,
+          year,
+        };
+        try {
+          await addUserOpening(request);
+        } catch (error) {
+          console.error('Error sending UserClaims to backend:', error);
+        }
+      }
+
+      // Check if the newYear is still before or equal to the current year
+      if (newYear <= currentYear) {
         playClapSound();
         setCurrentVideoIndex(0);
         setShowTitles(Array(6).fill(false)); // Reset titles for new batch
         setIsTransitioning(true);
         setShowBackground(true);
-        // Send UserClaims to the backend
-        if(user) {
-          const userId = user.id; // Assuming the user object has an 'id' property
-          const openingId = index; // This should be the id of the selected opening
-          const request: UserOpeningModel = {
-            userId,
-            openingId,
-            year,
-          };
-          try {
-            await addUserOpening(request);
-          } catch (error) {
-            console.error('Error sending UserClaims to backend:', error);
-          }
-        }
-        setYear(newYear);
-        await fetchOpenings(newYear);
+
+        setYear(newYear);  // Increment the year
+
+        await fetchOpenings(newYear); // Fetch openings for the new year
         setTimeout(() => {
           setIsPlaying(true);
           setIsTransitioning(false);
           setShowBackground(false);
         }, 1000);
       } else {
+        // Once we've gone through all the years (i.e., newYear is past currentYear), show ending
         setShowButton(false);
         setShowEnding(true);
       }
@@ -133,6 +148,12 @@ const MainLayout = () => {
     }, 1000);
   };
 
+  const handleImageClick = () => {
+    if (user) {
+      navigate("/userPanel");
+    }
+  };
+
   return (
     <div className={Style.mainLayout}>
       <div className={Style.mainContent}>
@@ -148,7 +169,7 @@ const MainLayout = () => {
           <img className={Style.backgroundTransition} src={backgroundTransition} alt="background transition"/>
         </div>
         <div className={`${Style.endingCharacterContener} ${showEnding ? Style.show : ''}`} style={{ display: showEnding ? 'flex' : 'none' }}>
-          <img className={Style.backgroundTransition} src={endingCharacter} alt="background character"/>
+          <img className={Style.backgroundTransition} src={endingCharacter} alt="background character" onClick={handleImageClick}/>
         </div>
         {showButton && (
           <button className={Style.playButton} onClick={handleButtonClick}>Play</button>
@@ -174,6 +195,7 @@ const MainLayout = () => {
         )}
       </div>
       <audio ref={clapAudioRef} src={clapAudio} />
+      <WelcomeDialog />
     </div>
   );
 };
