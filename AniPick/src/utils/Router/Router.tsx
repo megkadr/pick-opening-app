@@ -10,6 +10,7 @@ const RegisterForm = lazy(() => import('../../pages/Registration/Registration'))
 const LoginForm = lazy(() => import('../../pages/Login/Login'));
 const UserPanel = lazy(() => import('../../pages/UserPanel/UserPanel'));
 const About = lazy(() => import('../../pages/About/About'));
+const AllOpenings = lazy(() => import('../../pages/AllOpenings/AllOpenings'));
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const isLoggedIn = useAuthStore(state => state.isLoggedIn);
@@ -111,6 +112,14 @@ export default function Router() {
                         element={
                             <Suspense fallback={null}>
                                 <About />
+                            </Suspense>
+                        }
+                    />
+                    <Route
+                        path="/allOpenings"
+                        element={
+                            <Suspense fallback={null}>
+                                <AllOpenings />
                             </Suspense>
                         }
                     />

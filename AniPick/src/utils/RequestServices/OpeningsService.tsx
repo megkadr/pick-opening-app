@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { Opening } from "../../assets/DTO/Opening";
+import { OpeningsByYear } from "../../assets/DTO/OpeningsByYear";
 import { axiosClient } from "./AxiosClient";
 
 export async function addAnimeOpening(request: Opening) {
@@ -11,5 +12,10 @@ export async function addAnimeOpening(request: Opening) {
 
 export async function getOpeningsByYear(year: number): Promise<Opening[]> {
     const response = await axiosClient.get<Opening[]>(`/Openings/openings?year=${year}`);
+    return response.data
+}
+
+export async function getAllOpenings(): Promise<OpeningsByYear[]> {
+    const response = await axiosClient.get<OpeningsByYear[]>(`/Openings/allOpenings`);
     return response.data
 }
