@@ -122,7 +122,7 @@ export default function UserPanelContent() {
         <ThemeProvider theme={theme}>
             <div className={Style.container}>
                 <div className={Style.userData}>
-                    <Accordion>
+                    <Accordion className={Style.panelAccordion}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1-content"
@@ -167,7 +167,7 @@ export default function UserPanelContent() {
                             </List>
                         </AccordionDetails>
                     </Accordion>
-                    <Accordion>
+                    <Accordion className={Style.panelAccordion}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel2-content"
@@ -179,7 +179,7 @@ export default function UserPanelContent() {
                             <ChangePasswordContent />
                         </AccordionDetails>
                     </Accordion>
-                    <Accordion>
+                    <Accordion className={Style.panelAccordion}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel3-content"

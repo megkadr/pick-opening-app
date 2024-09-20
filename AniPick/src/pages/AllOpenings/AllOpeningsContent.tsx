@@ -116,7 +116,7 @@ export default function AllOpeningsContent() {
                         <>
                             <h1 style={{ fontSize: "3rem" }}>All Openings</h1>
                             {openings.map((yearlyData) => (
-                                <Accordion key={yearlyData.year}>
+                                <Accordion key={yearlyData.year} className={Style.yearAccordion}>
                                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography>{yearlyData.year}</Typography>
                                     </AccordionSummary>

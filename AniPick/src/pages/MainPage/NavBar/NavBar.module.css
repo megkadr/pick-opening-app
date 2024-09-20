@@ -1,7 +1,7 @@
 .header {
     min-height: 6vh;
     max-height: 6vh;
-    background: #191919;
+    background: #191919 !important;
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175); 
     z-index: 300;
     position: relative;
@@ -10,37 +10,36 @@
 .nav {
     min-height: 6vh;
     max-height: 6vh;
-    background-color: #333;
-    color: white;
     display: flex;
     justify-content: space-between;
-    align-items: stretch;
-    gap: 2rem;
-    padding: 0 1rem;
+    align-items: center;
 }
 
-.nav ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
+.navLinks {
     display: flex;
     gap: 1rem;
 }
 
-.nav a {
-    color: inherit;
+.navLink {
+    color: white;
     text-decoration: none;
+    font-weight: 600;
     min-height: 100%;
     display: flex;
     align-items: center;
     padding: .25rem;
-    font-weight: 600;
 }
 
-.nav a:hover {
+.navLink:hover {
     color: #95b6d0;
+}
+
+.active {
+    color: #95b6d0 !important;
 }
 
 .siteTitle {
     font-size: 1.8rem;
+    color: white;
+    text-decoration: none;
 }
