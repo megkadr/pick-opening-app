@@ -1,6 +1,6 @@
 .mainLayout { 
     display: flex;
-    min-height: 94vh;
+    min-height: 93vh;
     flex-direction: column;
 }
 
@@ -109,4 +109,50 @@
 
 .endingCharacterContener  .backgroundTransition:hover{
     scale: 1.1;
+}
+
+@media only screen and (max-width: 770px) {
+    .mainLayout::before {
+        background-size: contain;
+        content: "";
+    }
+
+    .cardPicks {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mainContent {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .quizTitle { 
+        max-width: 80vw;
+        min-width: 79vw;
+        height: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 200;
+    }
+    
+    .quizTitle h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #95b6d0;
+        background: #494949;
+        border-radius: 2rem;
+        padding: 1rem;
+        margin: 0;
+    }
+
+    .backgroundTransition {
+        max-width: 20rem;
+        max-height: 70svh;
+    }
+
+    .endingCharacterContener {
+        max-width: 20rem;
+        max-height: 70svh;
+    }
 }

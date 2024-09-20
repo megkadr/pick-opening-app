@@ -21,3 +21,17 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     text-align: center;
 }
+
+@media only screen and (max-width: 770px) { 
+    .allOpeningsContainer {
+        max-width: 60ch;
+        margin-top: 6svh;
+        padding: 0;
+    }
+
+    .yearAccordion {
+        width: 90%;
+        vertical-align: middle;
+        margin: auto;
+    }
+}
