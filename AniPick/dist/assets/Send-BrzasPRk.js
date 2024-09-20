@@ -1,0 +1,1 @@
+import{J as r,K as t}from"./Footer-DuzvaY6S.js";import{j as a}from"./index-CY9RCQaF.js";var e={},o=t;Object.defineProperty(e,"__esModule",{value:!0});var u=e.default=void 0,d=o(r()),i=a;u=e.default=(0,d.default)((0,i.jsx)("path",{d:"M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"}),"Send");export{u as d};
