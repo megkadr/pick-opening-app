@@ -64,7 +64,6 @@ export default function ChangePasswordContent() {
         setMessage('');
         try {
             formData.userId = user.id;
-            console.log("formData", formData);
             const response = await changePassword(formData);      
             if (response) {
                 setMessage('Password changed successfully');

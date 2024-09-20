@@ -97,7 +97,6 @@ export default function UserPanelContent() {
 
             try {
                 const response = await getUserAccountDetails(user.id);
-                console.log("response.data", response.data);
                 setUserDetails(response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);

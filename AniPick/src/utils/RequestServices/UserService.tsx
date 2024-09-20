@@ -49,7 +49,6 @@ export async function changePassword(request: {userId: number, currentPassword: 
 export async function isAuthenticated(userId: number): Promise<boolean> {
     try {
         const response = await axiosClient.get(`/Users/isAuthenticated?userId=${userId}`);
-        console.log('Auth check response:', response);
         return response.status === 200;
     } catch (error) {
         console.error('Authentication check failed:', error)

@@ -67,7 +67,7 @@ const MainLayout = () => {
   }, [currentVideoIndex, isPlaying, openings]);
 
   useEffect(() => {
-    console.log("Updated openings");
+    console.log("");
   }, [openings]);
 
   const fetchOpenings = async (year: number) => {
