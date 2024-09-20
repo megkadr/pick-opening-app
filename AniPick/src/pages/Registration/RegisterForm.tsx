@@ -74,7 +74,8 @@ export default function Registration() {
             navigate('/login');
         } catch (error) {
             console.error('Registration failed:', error);
-            setError('Registration failed. Please try again.');
+            const errorMessage = error instanceof Error ? error.message : 'Registration failed. Please try again.';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }

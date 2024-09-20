@@ -35,6 +35,11 @@ public class UsersService(ApplicationDbContext context) : IUsersService
     {
         try
         {
+            var isExist = await context.Users.FirstOrDefaultAsync(x=> x.Name == model.Name || x.Email == model.Email);
+            if (isExist!= null)
+            {
+                return (null, new Exception("User with the same name or email already exists."));
+            }
             var user = new User
             {
                 Name = model.Name,
